@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "dependencies": {},
   "devDependencies": {
+    "request": "^2.87.0",
     "ws": "^6.0.0"
   }
 }
