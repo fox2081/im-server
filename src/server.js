@@ -2,8 +2,11 @@ const {Server} = require('ws');
 const http = require('http');
 const request = require('request');
 const url = require('url');
-const paht = require('path')
+const path = require('path');
 
+const UserInfo = require('./handler/user-info.js');
+
+let userInfo = new UserInfo();
 
 let wss = new Server({port: 14001});
 wss.on('connection', (ws) => {
@@ -18,12 +21,19 @@ wss.on('connection', (ws) => {
 let app = http.createServer().listen(9999);
 app.on('request', function (req, res) {
 
-    console.log(encodeURI(req.url));
     let parseObj = url.parse(req.url, true);
-    console.log(parseObj);
     let pathname = parseObj.pathname;
-    console.log(pathname);
+    let [auth, type, route] = pathname.split('/');
+
+    if ('usr' === auth && UserInfo.judgeToken(parseObj.token)) {
+
+    }
+
     req.query = parseObj.query;
+
+    console.log(encodeURI(req.url));
+    console.log(parseObj);
+    console.log(pathname);
     console.log(req.query);
 
 });
